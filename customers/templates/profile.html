@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-2">
+        <a href="{% url 'profile' %}" class="btn btn-outline-primary my-2">Profile</a>
+        <a href="{% url 'orders' %}" class="btn btn-outline-primary">Orders</a>
+    </div>
+    <div class="col-10">
+        
+        {% if form %}
+        <div class="w-50 m-auto">
+            <h2>Profile</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{form | crispy}}
+                <input type="submit" value="Edit" class="btn btn-primary">
+            </form>
+        </div>
+            {% else %}
+            <div class="row">
+                
+                {% if orders %}
+                
+                {% for order in orders %}
+                    <div class="col-4">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{order.car.image.url}}" alt="Card image cap">
+                            <div class="card-body">
+                              <p class="card-text">{{order.car.name}}</p>
+                            </div>
+                          </div>
+                    </div>
+                {% endfor %}
+                    
+                    {% else %}
+                    <h2>No Orders</h2>
+                {% endif %}
+                    
+            </div>
+        {% endif %}              
+    </div>
+</div>
+{% endblock content %}
+    

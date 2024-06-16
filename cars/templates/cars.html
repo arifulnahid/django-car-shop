@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+
+{% block brand %}
+    
+    
+    {% for brand in brands %}
+    <a href="{% url 'car' brand.id %}" class="btn btn-outline-primary 
+    {% if brand.id == id %}
+        active
+    {% endif %}
+         ">{{brand.name}}</a>
+    {% endfor %}
+        
+        
+        
+{% endblock brand %}
+    
+
+{% block content %}
+
+{% if cars %}
+
+{% for car in cars %}
+<div class="col-3">
+    <div class="card">
+        <img src="{{ car.image.url }}"  class="card-img-top" alt="{{car.name}}">
+        <a href="{% url 'car_details' car.id %}" class="card-body text-decoration-none">
+        <h5 class="card-title">{{car.name}}</h5>
+        <p class="m-0">Brand: {{car.brand}}</p>
+        <p class="m-0">Price: {{car.price | intcomma }}</p>
+        <p class="m-0">Quantity: {{car.qunatity}}</p>
+        </a>
+    </div>
+</div>
+{% endfor %}
+    
+    {% else %}
+    <div class="text-center my-4">
+        No Car Found
+    </div>
+{% endif %}
+    
+    
+{% endblock content %}
+    
